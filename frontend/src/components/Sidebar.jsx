@@ -6,11 +6,13 @@ import { MdEditDocument, MdOutlineExplore } from "react-icons/md";
 import { PiSignInBold, PiSignOutBold } from "react-icons/pi";
 import Logout from "./LogOut";
 
-
 const Sidebar = () => {
-  const authUser =false;
+  const authUser = true;
   return (
-    <aside className="flex flex-col items-center min-w-12 sm:w-16 sticky top-0 left-0 h-screen py-8 overflow-y-auto w-full bg-white-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border-r hover:bg-gray-600/10 duration-200 text-white border-gray-500">
+    <aside
+      className="flex flex-col items-center min-w-12 sm:w-16 sticky top-0 left-0 h-screen py-8
+    overflow-y-auto border-r bg-glass"
+    >
       <nav className="h-full flex flex-col gap-5">
         <Link to="/" className="flex justify-center">
           <img src="/github.svg" alt="GitHub Logo" className="h-8" />
@@ -44,7 +46,7 @@ const Sidebar = () => {
           <div className="flex flex-col gap-2 mt-auto">
             <Logout />
           </div>
-        )} 
+        )}
       </nav>
     </aside>
   );

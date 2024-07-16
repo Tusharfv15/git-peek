@@ -19,36 +19,16 @@ function HomePage() {
       setLoading(true);
       setUserNotFound(false);
       try {
-        const userRes = await fetch(
-          `https://api.github.com/users/${username}`,
-          {
-            headers: {
-              authorization: `token ${import.meta.env.VITE_GITHUB_API_KEY}`,
-            },
-          }
-        );
-        if (!userRes.ok) {
-          // Check if the user does not exist (status code 404)
-          if (userRes.status === 404) {
-            setUserNotFound(true);
-          } else {
-            toast.error("Failed to fetch user profile");
-          }
+        const res = await fetch(`http://localhost:5000/api/users/profile/${username}`);
+        if (res.status === 404) {
+          setUserNotFound(true);
           setLoading(false);
           return;
         }
+        const { userProfile, repos } = await res.json();
 
-        const userProfile = await userRes.json();
         setUserProfile(userProfile);
 
-        const repoRes = await fetch(userProfile.repos_url);
-        if (!repoRes.ok) {
-          toast.error("Failed to fetch repositories");
-          setLoading(false);
-          return;
-        }
-
-        const repos = await repoRes.json();
         repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setRepos(repos);
         console.log(repos);
@@ -56,7 +36,7 @@ function HomePage() {
         setLoading(false);
         return { userProfile, repos };
       } catch (error) {
-        toast.error(error.message);
+        toast.error("User not found");
         setLoading(false);
       } finally {
         setLoading(false);

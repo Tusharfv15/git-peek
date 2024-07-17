@@ -19,7 +19,7 @@ function HomePage() {
       setLoading(true);
       setUserNotFound(false);
       try {
-        const res = await fetch(`http://localhost:5000/api/users/profile/${username}`);
+        const res = await fetch(`/api/users/profile/${username}`);
         if (res.status === 404) {
           setUserNotFound(true);
           setLoading(false);
@@ -31,8 +31,7 @@ function HomePage() {
 
         repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         setRepos(repos);
-        console.log(repos);
-        console.log(userProfile);
+       
         setLoading(false);
         return { userProfile, repos };
       } catch (error) {
